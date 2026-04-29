@@ -1,111 +1,106 @@
 # Max Late Game
 
-Plataforma para gestão de torneios, notificações e operação de assinaturas voltada ao universo de poker. O foco deste README é funcionar também como material de portfólio: explicar o produto com clareza, mostrar os principais fluxos e deixar registrado o resultado visual da aplicação. ✨
+Plataforma profissional para gestão de torneios, controle de pagamentos e operação de assinaturas. O sistema oferece uma solução completa para organizadores e jogadores, automatizando processos desde a divulgação do evento até o gerenciamento de inscrições e notificações.
 
 ## Visão Geral
 
-O projeto oferece uma experiência em três camadas:
+O projeto é dividido em três módulos principais que garantem a gestão ponta a ponta da operação:
 
-- Público, com landing page, planos e entrada para a plataforma.
-- Admin, com gestão de usuários, torneios, pagamentos, anúncios e configurações.
-- Usuário, com acesso ao painel, perfil, torneios e notificações.
+- **Portal Público:** Landing page institucional, exibição de planos de assinatura e acesso à plataforma.
+- **Painel Administrativo (Backoffice):** Gestão centralizada de usuários, aprovação de torneios, controle financeiro, gerenciamento de anúncios (banners) e configurações gerais.
+- **Área do Jogador:** Acesso seguro ao painel individual, perfil, acompanhamento de torneios e central de notificações.
 
-Para esta documentação, a base foi semeada com dados reais de demonstração, incluindo:
+Para fins de demonstração, a base de dados inclui registros de exemplo, contemplando fluxos completos de pagamentos, torneios ativos e notificações.
 
-- `Portfolio User`
-- `Portfolio Open Night`
-- `Highlight Banner Portfolio`
-- um pagamento manual para o fluxo financeiro
-- notificações para o usuário de portfólio
+## Tecnologias Utilizadas
 
-## Tecnologias
+- **Backend:** Laravel (PHP 8+)
+- **Frontend:** Vue 3 (SPA), Vue Router, Pinia
+- **Estilização:** Bootstrap / SASS
+- **Ferramentas Adicionais:** MySQL, Playwright (Capturas E2E), PHPUnit
 
-- Laravel
-- Vue 3
-- Vue Router
-- Pinia
-- Bootstrap
-- Playwright para captura dos screenshots desta documentação
-
-## Fluxo da Experiência
+## Arquitetura de Fluxos
 
 ```mermaid
 flowchart LR
-	A["Landing page pública"] --> B["Login / autenticação"]
-	B --> C["Painel admin"]
-	B --> D["Área do usuário"]
-	C --> C1["Cadastros e aprovações"]
-	C --> C2["Pagamentos e banners"]
-	C1 --> D
-	C2 --> D
-	D --> D1["Perfil e notificações"]
-	D --> D2["Consulta de torneios"]
+A["Portal Público"] --> B["Autenticação"]
+B --> C["Backoffice (Admin)"]
+B --> D["Área do Jogador"]
+C --> C1["Gestão de Entidades"]
+C --> C2["Financeiro e Marketing"]
+C1 -. Atualiza .-> D
+C2 -. Notifica .-> D
+D --> D1["Perfil e Notificações"]
+D --> D2["Exploração de Torneios"]
 ```
 
-## Execução Local
+## Setup Local
 
 ```bash
-php artisan storage:link
+# Clone e instalação
+composer install
+npm install
+
+# Configuração de ambiente e banco
+cp .env.example .env
 php artisan key:generate
+php artisan migrate --seed
+php artisan storage:link
+
+# Execução
+npm run dev
 php artisan serve --host=127.0.0.1 --port=8000
 ```
 
-## Credenciais de Demonstração
+## Acesso aos Ambientes de Demonstração
 
-Use estas contas para navegar pelos fluxos documentados aqui:
+Para navegar pelos módulos, utilize as contas iniciais de exemplo:
 
-- Admin: `admin@teste.com` / `password`
-- Usuário de portfólio: `portfolio@teste.com` / `password`
+- **Administrador:** `admin@teste.com` / `password`
+- **Jogador (Usuário Comum):** `portfolio@teste.com` / `password`
 
-## Capturas de Tela
+## Capturas de Tela (Showcase)
 
-Todas as imagens abaixo foram salvas em `doc/screenshots` com viewport consistente de `1440 x 1200`.
+As telas abaixo ilustram o funcionamento da aplicação, refletindo os fluxos de ponta a ponta.
 
-### Público
+### Experiência Pública
 
-Landing page com o posicionamento da plataforma e acesso rápido aos planos.
+Landing page com o posicionamento da plataforma, captação de leads e acesso rápido aos planos.
 
 ![Home pública](doc/screenshots/01-public-home-hero.png)
 
-Visão dos planos disponíveis, útil para comunicar o modelo comercial da plataforma.
+Apresentação dos planos de assinatura.
 
 ![Planos públicos](doc/screenshots/02-public-home-plans.png)
 
-### Admin
+### Painel Administrativo
 
-Painel principal com métricas operacionais e visão geral da operação.
+Dashboard de acompanhamento com métricas operacionais e indicadores gerais.
 
 ![Dashboard do admin](doc/screenshots/03-admin-dashboard.png)
 
-Lista de usuários cadastrados com o usuário de portfólio em evidência.
+Gestão de usuários da plataforma e controle de status.
 
 ![Gestão de usuários](doc/screenshots/04-admin-users.png)
 
-Gestão de torneios com o torneio `Portfolio Open Night` aprovado.
+Central de torneios: listagem, aprovação e categorização de competições.
 
 ![Gestão de torneios](doc/screenshots/05-admin-tournaments.png)
 
-Fluxo financeiro com o pagamento manual registrado para a conta de demonstração.
+Painel financeiro para conciliação das movimentações de usuários.
 
 ![Pagamentos](doc/screenshots/06-admin-payments.png)
 
-Área de configurações com o banner criado para reforçar a comunicação visual da plataforma.
+Gestor de publicidade e marketing (banners) para veiculação segmentada na plataforma.
 
 ![Banners](doc/screenshots/07-admin-banners.png)
 
-### Usuário
+### Área do Jogador
 
-Perfil do usuário de demonstração, útil para mostrar a experiência individual pós-login.
+Gestão individual, atualização de credenciais e segurança da conta.
 
 ![Perfil do usuário](doc/screenshots/08-user-profile.png)
 
-Centro de notificações com os eventos semeados durante a documentação.
+Feed estruturado de notificações com atualizações de fluxo.
 
 ![Notificações do usuário](doc/screenshots/09-user-notifications.png)
-
-## Observações de Portfólio
-
-- A documentação foi pensada para deixar a navegação clara em poucos segundos.
-- Os screenshots priorizam estados reais da aplicação, não mockups.
-- A base de teste foi enriquecida durante a captura para mostrar melhor os fluxos críticos.
-- O resultado final equilibra operação, produto e apresentação visual sem exageros.
