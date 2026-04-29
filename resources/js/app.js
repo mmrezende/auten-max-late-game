@@ -19,9 +19,11 @@ const app = createApp(App);
 app.config.globalProperties.user = {...PHP_USER, is_admin: Boolean(PHP_USER.is_admin)};
 
 // Provide mercadoPago instance globally
-app.config.globalProperties.mercadoPago = new MercadoPago(MERCADO_PAGO_PK, {
-    locale: 'pt-BR'
-});
+app.config.globalProperties.mercadoPago = MERCADO_PAGO_PK
+    ? new MercadoPago(MERCADO_PAGO_PK, {
+        locale: 'pt-BR'
+    })
+    : null;
 
 // Load route respectively to user privileges
 app.use(PHP_USER.is_admin ? adminRouter : clientRouter);

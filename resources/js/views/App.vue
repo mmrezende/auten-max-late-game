@@ -20,9 +20,10 @@ export default {
         currentUserStore.refresh();
         const bannerStore = useBannerStore();
         bannerStore.refresh();
-        const {isRegular, isPastTestPeriod} = storeToRefs(currentUserStore);
+        const {user, isRegular, isPastTestPeriod} = storeToRefs(currentUserStore);
 
         return {
+            user,
             isRegular,
             isPastTestPeriod,
             currentUserStore

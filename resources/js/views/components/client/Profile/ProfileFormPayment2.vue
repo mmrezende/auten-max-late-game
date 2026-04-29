@@ -190,6 +190,11 @@ export default {
             }
         },
         creditCardTransaction() {
+            if (!this.mercadoPago) {
+                alert('Pagamento com cartao indisponivel no momento.');
+                return;
+            }
+
             const cpf_cnpf = this.inputs.identificationNumber.replace(/\D/g,'');
             const cardNumber = this.inputs.cardNumber.replace(/\D/g,'');
             const cardExpirationMonth = ("00" + (this.inputs.expireDate.month + 1).toString()).slice(-2);
